@@ -8,7 +8,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "facebookcl"
     gem.summary = %Q{Facebook Command Line}
-    gem.description = %Q{Facebook Command Line Long Description}
+    gem.description = %Q{Retrofacebook.  Interact via the commandline.}
     gem.email = "jubishop@facebook.com"
     gem.homepage = "http://github.com/jubishop/facebookcl"
     gem.authors = ["Justin Bishop"]
