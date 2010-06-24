@@ -38,16 +38,20 @@ Welcome New User!  You need to auth this application.  So please visit here in y
       session = server.accept
       session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
       session.gets
-      session.print "<script>
-        window.location.replace(window.location.toString().replace('#', '?'))
-      </script>"
+      session.print "
+        <script>
+          window.location.replace(window.location.toString().replace('#', '?'));
+        </script>"
       session.close
 
       session = server.accept
       session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
       request = session.gets.strip
-      session.print "Success! " +
-        "You can now close this window and return to FacebookCL."
+      session.print "Success!
+        You can now close this window and return to FacebookCL.
+        <script>
+          window.close();
+        </script>"
       session.close
       server.close
 
