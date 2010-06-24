@@ -10,8 +10,10 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Justin Bishop"]
   s.date = %q{2010-06-24}
+  s.default_executable = %q{./facebook}
   s.description = %q{Facebook Command Line Long Description}
   s.email = %q{jubishop@facebook.com}
+  s.executables = ["./facebook"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.markdown"
@@ -29,7 +31,7 @@ Gem::Specification.new do |s|
      "commands/picture.rb",
      "commands/stream.rb",
      "commands/wall.rb",
-     "facebook.rb",
+     "facebook",
      "facebookcl.gemspec",
      "lib/facebookcl.rb",
      "spec/facebookcl_spec.rb",
