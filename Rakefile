@@ -1,12 +1,7 @@
 require 'rubygems'
 require 'rake'
-require 'rake/testtask'
 
-task :default => [:test]
-
-Rake::TestTask.new(:test) do |t|
-  t.libs << "commands"
-end
+task :default do; end
 
 begin
   require 'jeweler'
