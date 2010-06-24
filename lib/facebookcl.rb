@@ -13,7 +13,7 @@ module FacebookCL; class << self
   APP_ID = 119412046078
   SERVER_PORT = 6682
   GRAPH_URL = 'graph.facebook.com'
-  NEXT_URL = 'http://www.dev.facebook.com/connect/facebook_cl.php'
+  NEXT_URL = 'http://127.0.0.1:6682'
 
   attr_accessor :uid
 
@@ -24,8 +24,7 @@ module FacebookCL; class << self
       self.access_token = data['access_token']
       self.uid = data['uid']
     else
-      auth_url = "https://#{GRAPH_URL}/oauth/authorize?client_id=#{APP_ID}&redirect_uri=#{NEXT_URL}&scope=publish_stream,create_event,offline_access,email,read_stream,read_mailbox"
-
+      auth_url = "https://#{GRAPH_URL}/oauth/authorize?client_id=#{APP_ID}&redirect_uri=#{NEXT_URL}&type=user_agent&display=page&scope=publish_stream,create_event,offline_access,email,read_stream,read_mailbox"
       if (RUBY_PLATFORM.downcase.include?("darwin"))
         `open '#{auth_url}'`
       else
@@ -35,18 +34,26 @@ Welcome New User!  You need to auth this application.  So please visit here in y
 #{auth_url}}
       end
 
-      session = TCPServer.new('127.0.0.1', SERVER_PORT).accept
+      server = TCPServer.new('127.0.0.1', SERVER_PORT)
+      session = server.accept
+      session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
+      session.gets
+      session.print "<script>
+        window.location.replace(window.location.toString().replace('#', '?'))
+      </script>"
+      session.close
+
+      session = server.accept
       session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
       request = session.gets.strip
-
-      session.print 'Success! ' +
-        'You can close this window and return to FacebookCL now.'
+      session.print "Success! " +
+        "You can now close this window and return to FacebookCL."
       session.close
+      server.close
 
       self.access_token = request.
         gsub(/^GET \/\?access_token=/, '').
         gsub(/ HTTP.*$/, '')
-
       self.uid = get('me')['id']
 
       puts "Saving authentication data to #{config_filename}"
