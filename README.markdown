@@ -13,5 +13,5 @@ Installation
 Usage
 -----
 
-> facebook
-[FacebookCL] help
+> # facebook
+> [FacebookCL] help
