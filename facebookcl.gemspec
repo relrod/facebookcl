@@ -5,15 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{facebookcl}
-  s.version = "0.1.7"
+  s.version = "0.1.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Justin Bishop"]
   s.date = %q{2010-06-24}
-  s.default_executable = %q{./facebook}
+  s.default_executable = %q{facebook}
   s.description = %q{Facebook Command Line Long Description}
   s.email = %q{jubishop@facebook.com}
-  s.executables = ["./facebook"]
+  s.executables = ["facebook"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.markdown"
@@ -25,28 +25,21 @@ Gem::Specification.new do |s|
      "README.markdown",
      "Rakefile",
      "VERSION",
+     "bin/facebook",
      "commands/base.rb",
      "commands/help.rb",
      "commands/info.rb",
      "commands/picture.rb",
      "commands/stream.rb",
      "commands/wall.rb",
-     "facebook",
      "facebookcl.gemspec",
-     "lib/facebookcl.rb",
-     "spec/facebookcl_spec.rb",
-     "spec/spec.opts",
-     "spec/spec_helper.rb"
+     "lib/facebookcl.rb"
   ]
   s.homepage = %q{http://github.com/jubishop/facebookcl}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Facebook Command Line}
-  s.test_files = [
-    "spec/facebookcl_spec.rb",
-     "spec/spec_helper.rb"
-  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

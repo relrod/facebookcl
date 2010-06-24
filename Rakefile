@@ -1,8 +1,15 @@
 require 'rubygems'
 require 'rake'
-require 'jeweler'
+require 'rake/testtask'
 
-task :default do
+task :default => [:test]
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << "commands"
+end
+
+begin
+  require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "facebookcl"
     gem.summary = %Q{Facebook Command Line}
@@ -10,8 +17,10 @@ task :default do
     gem.email = "jubishop@facebook.com"
     gem.homepage = "http://github.com/jubishop/facebookcl"
     gem.authors = ["Justin Bishop"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.executables = ['facebook']
   end
   Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts "Jeweler (or a dependency) not available."
+  puts "Install it with: gem install jeweler"
 end
