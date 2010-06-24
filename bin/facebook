@@ -4,7 +4,7 @@ require 'readline'
 require 'shellwords'
 
 __DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../lib/FacebookCL.rb'
+require __DIR__ + '/../lib/facebookcl.rb'
 Dir.glob(__DIR__ + '/../commands/*.rb').each { |src| require src }
 
 FacebookCL.authorize
