@@ -18,7 +18,7 @@ begin
 ===========================================================
 
            Thanks for installing FacebookCL!
-           Just run 'facebook' to start.
+           Just run 'facebook' to start...
 
 ===========================================================
 
