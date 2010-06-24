@@ -3,8 +3,8 @@
 require 'readline'
 require 'shellwords'
 
-require 'lib/FacebookCL.rb'
-Dir.glob("commands/*.rb").each { |src| require src }
+require '../lib/FacebookCL.rb'
+Dir.glob("../commands/*.rb").each { |src| require src }
 
 FacebookCL.authorize
 

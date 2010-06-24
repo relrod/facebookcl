@@ -12,7 +12,7 @@ begin
     gem.email = "jubishop@facebook.com"
     gem.homepage = "http://github.com/jubishop/facebookcl"
     gem.authors = ["Justin Bishop"]
-    gem.executables = ['facebook']
+    gem.executables = []
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
