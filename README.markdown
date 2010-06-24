@@ -4,9 +4,9 @@ FacebookCL
 Installation
 ------------
 
-*  git clone git@github.com:jubishop/FacebookCL.git
-*  cd FacebookCL
-*  ruby facebook.rb
+*  gem install facebookcl
+
+For more details: http://rubygems.org/gems/facebookcl
 
 ### Extra Features ###
 
@@ -15,6 +15,5 @@ Installation
 Usage
 -----
 
-*  ruby facebook.rb
+*  ruby facebookcl.rb
 *  help
-* Hello World
