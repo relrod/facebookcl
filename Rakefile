@@ -13,6 +13,16 @@ begin
     gem.homepage = "http://github.com/jubishop/facebookcl"
     gem.authors = ["Justin Bishop"]
     gem.executables = ['facebook']
+    gem.post_install_message = <<MESSAGE
+
+===========================================================
+
+           Thanks for installing FacebookCL!
+           Just run 'facebook' to start.
+
+===========================================================
+
+MESSAGE
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
