@@ -13,6 +13,7 @@ begin
     gem.homepage = "http://github.com/jubishop/facebookcl"
     gem.authors = ["Justin Bishop"]
     gem.executables = ['facebook']
+    gem.add_runtime_dependency('json')
     gem.post_install_message = <<MESSAGE
 
 ===========================================================
