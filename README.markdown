@@ -4,9 +4,7 @@ FacebookCL
 Installation
 ------------
 
-*  gem install facebookcl
-
-For more details: http://rubygems.org/gems/facebookcl
+*  gem install [facebookcl](http://rubygems.org/gems/facebookcl)
 
 ### Extra Features ###
 
