@@ -1,19 +1,22 @@
 require 'rubygems'
 
-require 'json'
+# built in
 require 'net/http'
 require 'net/https'
 require 'open-uri'
 require 'socket'
 require 'uri'
 
+# runtime dependencies
+require 'json'
+
 module FacebookCL; class << self
   public
 
-  APP_ID = 119412046078
-  SERVER_PORT = 6682
+  APP_ID = 119412046078 # FacebookCL
+  SERVER_PORT = 6682 # my birthday ;o)
   GRAPH_URL = 'graph.facebook.com'
-  NEXT_URL = 'http://127.0.0.1:6682'
+  NEXT_URL = '127.0.0.1'
 
   attr_accessor :uid
 
@@ -32,7 +35,7 @@ module FacebookCL; class << self
                'read_mailbox']
 
       params = {'client_id' => APP_ID,
-                'redirect_uri' => NEXT_URL,
+                'redirect_uri' => "http://#{NEXT_URL}:#{SERVER_PORT}",
                 'type' => 'user_agent',
                 'display' => 'page',
                 'scope' => perms.join(',')}
@@ -115,7 +118,7 @@ module FacebookCL; class << self
   end
 
   def serve_content(content)
-    @server ||= TCPServer.new('127.0.0.1', SERVER_PORT)
+    @server ||= TCPServer.new(NEXT_URL, SERVER_PORT)
 
     session = @server.accept
     session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
