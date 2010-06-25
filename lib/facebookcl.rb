@@ -10,9 +10,11 @@ require 'uri'
 # runtime dependencies
 require 'json'
 
-module FacebookCL; class << self
-  public
+# helper libs
+__DIR__ = File.dirname(__FILE__)
+require __DIR__ + '/facebook_server.rb'
 
+module FacebookCL; class << self
   APP_ID = 119412046078 # FacebookCL
   SERVER_PORT = 6682 # my birthday ;o)
   GRAPH_URL = 'graph.facebook.com'
@@ -52,22 +54,11 @@ module FacebookCL; class << self
           auth_url
       end
 
-      serve_content(%Q{
-        <script>
-          window.location.replace(window.location.toString().replace('#', '?'));
-        </script>})
+      server = FacebookAuthServer.new(NEXT_URL, SERVER_PORT)
+      self.access_token =
+        server.serve_and_extract_access_token_from_user_agent_flow
+      server.close
 
-      request = serve_content(%q{
-        Success! You can now close this window and return to FacebookCL.
-        <script>
-          window.close();
-        </script>})
-
-      @server.close
-
-      self.access_token = request.
-        gsub(/^GET \/\?access_token=/, '').
-        gsub(/ HTTP.*$/, '')
       self.uid = get('me')['id']
 
       puts "Saving authentication data to #{config_filename}"
@@ -115,19 +106,5 @@ module FacebookCL; class << self
     else
       value
     end
-  end
-
-  def serve_content(content)
-    @server ||= TCPServer.new(NEXT_URL, SERVER_PORT)
-
-    session = @server.accept
-    session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
-
-    request = session.gets.strip
-
-    session.print content
-    session.close
-
-    request
   end
 end; end

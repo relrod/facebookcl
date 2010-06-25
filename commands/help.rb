@@ -1,6 +1,4 @@
 module FacebookCommands; class << self
-  public
-
   def help(*args)
     if (args.first == 'help')
       puts 'help'

@@ -1,8 +1,6 @@
 require 'optparse'
 
 module FacebookCommands; class << self
-  public
-
   def picture(*args)
     if (args.first == 'help')
       puts 'picture <friend>'

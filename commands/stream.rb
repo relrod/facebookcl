@@ -1,8 +1,6 @@
 require 'optparse'
 
 module FacebookCommands; class << self
-  public
-
   def stream(*args)
     if args.empty?
       puts 'stream by itself does nothing'

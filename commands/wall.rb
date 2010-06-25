@@ -1,6 +1,4 @@
 module FacebookCommands; class << self
-  public
-
   def wall(*args)
     if args.empty?
       puts 'wall by itself does nothing'
