@@ -24,36 +24,43 @@ module FacebookCL; class << self
       self.access_token = data['access_token']
       self.uid = data['uid']
     else
-      auth_url = "https://#{GRAPH_URL}/oauth/authorize?client_id=#{APP_ID}&redirect_uri=#{NEXT_URL}&type=user_agent&display=page&scope=publish_stream,create_event,offline_access,email,read_stream,read_mailbox"
+      perms = ['publish_stream',
+               'create_event',
+               'offline_access',
+               'email',
+               'read_stream',
+               'read_mailbox']
+
+      params = {'client_id' => APP_ID,
+                'redirect_uri' => NEXT_URL,
+                'type' => 'user_agent',
+                'display' => 'page',
+                'scope' => perms.join(',')}
+
+      auth_url = "https://#{GRAPH_URL}/oauth/authorize?" +
+        params.map{|key, value| "#{key}=#{value}"}.join('&')
+
       if (RUBY_PLATFORM.downcase.include?("darwin"))
         `open '#{auth_url}'`
       else
-        puts %Q{
-Welcome New User!  You need to auth this application.  So please visit here in your browser of choice:
-
-#{auth_url}}
+        puts 'Welcome New User! ' +
+          'You need to authorize FacebookCL. ' +
+          "Please visit this URL in your browser of choice: \n\n" +
+          auth_url
       end
 
-      server = TCPServer.new('127.0.0.1', SERVER_PORT)
-      session = server.accept
-      session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
-      session.gets
-      session.print "
+      serve_content(%Q{
         <script>
           window.location.replace(window.location.toString().replace('#', '?'));
-        </script>"
-      session.close
+        </script>})
 
-      session = server.accept
-      session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
-      request = session.gets.strip
-      session.print "Success!
-        You can now close this window and return to FacebookCL.
+      request = serve_content(%q{
+        Success! You can now close this window and return to FacebookCL.
         <script>
           window.close();
-        </script>"
-      session.close
-      server.close
+        </script>})
+
+      @server.close
 
       self.access_token = request.
         gsub(/^GET \/\?access_token=/, '').
@@ -105,5 +112,19 @@ Welcome New User!  You need to auth this application.  So please visit here in y
     else
       value
     end
+  end
+
+  def serve_content(content)
+    @server ||= TCPServer.new('127.0.0.1', SERVER_PORT)
+
+    session = @server.accept
+    session.print "HTTP/1.1 200/OK\r\nContent-type:text/html\r\n\r\n"
+
+    request = session.gets.strip
+
+    session.print content
+    session.close
+
+    request
   end
 end; end
