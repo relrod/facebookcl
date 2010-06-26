@@ -1,6 +1,8 @@
 FacebookCL
 ==========
 
+** Source code available on [github](http://github.com/jubishop/facebookcl) **
+
 Installation
 ------------
 
@@ -13,5 +15,12 @@ Installation
 Usage
 -----
 
+For interactive shell:
+
 * facebook
 * [FacebookCL] help
+
+To just execute one command:
+
+* facebook <single command>
+* facebook help

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# built in
 require 'readline'
 require 'shellwords'
 
@@ -9,27 +10,35 @@ Dir.glob(__DIR__ + '/../commands/*.rb').each { |src| require src }
 
 FacebookCL.authorize
 
-HISTORY_FILENAME = "#{ENV['HOME']}/.FacebookCLHistory"
-if (File.exists?(HISTORY_FILENAME))
-  history_text = File.open(HISTORY_FILENAME, 'r'){|file| file.read}
-  saved_history = JSON.parse(history_text)
-  saved_history.each { |historical_event|
-    Readline::HISTORY.push(historical_event)
+if (ARGV.empty?)
+  # history management
+  HISTORY_FILENAME = "#{ENV['HOME']}/.FacebookCLHistory"
+  if (File.exists?(HISTORY_FILENAME))
+    history_text = File.open(HISTORY_FILENAME, 'r'){|file| file.read}
+    saved_history = JSON.parse(history_text)
+    saved_history.each { |historical_event|
+      Readline::HISTORY.push(historical_event)
+    }
+  end
+
+  at_exit {
+    File.open(HISTORY_FILENAME, 'w') { |file|
+      file.puts Readline::HISTORY.to_a.to_json
+    }
   }
-end
 
-at_exit {
-  File.open(HISTORY_FILENAME, 'w') { |file|
-    file.puts Readline::HISTORY.to_a.to_json
+  # command completion
+  METHODS = FacebookCommands.singleton_methods - ['method_missing']
+  Readline.completion_proc = proc {|s|
+    METHODS.grep(/^#{Regexp.escape(s)}/)
   }
-}
 
-METHODS = FacebookCommands.singleton_methods - ['method_missing']
-Readline.completion_proc = proc {|s|
-  METHODS.grep(/^#{Regexp.escape(s)}/)
-}
-
-while line = Readline::readline('[FacebookCL] ', true)
-  args = Shellwords.shellwords(line)
-  FacebookCommands.send(args.shift, *args)
+  # interactive shell
+  while line = Readline::readline('[FacebookCL] ', true)
+    args = Shellwords.shellwords(line)
+    FacebookCommands.send(args.shift, *args)
+  end
+else
+  # simply execute command provided from shell
+  FacebookCommands.send(ARGV.shift, *ARGV)
 end
