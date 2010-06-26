@@ -13,13 +13,16 @@ begin
     gem.homepage = "http://github.com/jubishop/facebookcl"
     gem.authors = ["Justin Bishop"]
     gem.executables = ['facebook']
-    gem.add_runtime_dependency('json')
+    gem.add_dependency 'json'
     gem.post_install_message = <<MESSAGE
 
 ===========================================================
 
-           Thanks for installing FacebookCL!
-           Just run 'facebook' to start...
+  Thanks for installing FacebookCL!
+  If you have any questions or feedback, feel free to
+  email me:  jubishop@facebook.com
+
+  Just run 'facebook' to get started...
 
 ===========================================================
 
