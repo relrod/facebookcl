@@ -1,5 +1,4 @@
 require 'optparse'
-require 'pp'
 
 module FacebookCommands
   class << self
