@@ -16,9 +16,21 @@ require __DIR__ + '/facebook_server.rb'
 
 module FacebookCL; class << self
   APP_ID = 119412046078 # FacebookCL
-  SERVER_PORT = 6682 # my birthday ;o)
   GRAPH_URL = 'graph.facebook.com'
   NEXT_URL = '127.0.0.1'
+
+  # Default to Justin's birthday, but climb up to 6690, if the port is used.
+  (6682..6690).each do |port|
+    begin
+      check = TCPSocket.new(NEXT_URL, port)
+      next
+    rescue Errno::ECONNREFUSED
+      # Port is able to be used
+      SERVER_PORT = port
+      break
+    end
+  end
+
 
   attr_accessor :uid
 
