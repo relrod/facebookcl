@@ -65,10 +65,28 @@ module FacebookCommands
 
         def read(*args)
           stream = FacebookCL.get('me/feed')['data']
-          stream.each { |post|
-            puts post['message']
-            puts "\n------------------------------------------------------------\n"
-          }
+          if args.shift == 'filter'
+            must_contain = args.first
+          end
+          
+          # Believe it or not, there /is/ a reason I do the stream.each
+          # twice. If I only did it once, I'd have to check must_contain
+          # every time. It's never going to change. I'd rather check it
+          # one time, then loop through, than check every time, which is
+          # inefficient.
+          if must_contain
+            stream.each { |post|
+              if post['message'].include? must_contain
+                puts post['message']
+                puts "\n------------------------------------------------------------\n"
+              end
+            }
+          else
+            stream.each { |post|
+              puts post['message']
+              puts "\n------------------------------------------------------------\n"
+            }
+          end
         end
 
         def method_missing(verb, *args)
