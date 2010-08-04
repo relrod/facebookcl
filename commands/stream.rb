@@ -1,4 +1,5 @@
 require 'optparse'
+require 'pp'
 
 module FacebookCommands
   class << self
@@ -80,13 +81,13 @@ module FacebookCommands
           if must_contain
             stream.each { |post|
               if post['message'].include? must_contain
-                puts "[#{post['id']}] #{post['message']}"
+                puts "[#{post['id']}] #{post['from']['name']} | #{post['message']}"
                 puts "\n------------------------------------------------------------\n"
               end
             }
           else
             stream.each { |post|
-              puts "[#{post['id']}] #{post['message']}"
+              puts "[#{post['id']}] #{post['from']['name']} | #{post['message']}"
               puts "\n------------------------------------------------------------\n"
             }
           end
