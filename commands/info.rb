@@ -1,5 +1,3 @@
-require 'pp' # Because debugging is fun.
-
 module FacebookCommands
   class << self
     def info(*args)
@@ -10,7 +8,9 @@ module FacebookCommands
       
       friend = args.empty? ? 'me' : args.shift
       info = FacebookCL.get(friend)
-      # pp info
+      
+      # TODO: At this point we can go through args and see if they want something
+      # specific. For example, 'info 4 name' or even multiple things, 'info 4 name location'
       
       # TODO: There's got to be a better way to do this (without
       # iterating through info).
