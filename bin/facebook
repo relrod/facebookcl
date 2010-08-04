@@ -36,6 +36,7 @@ if (ARGV.empty?)
   # interactive shell
   while line = Readline::readline('[FacebookCL] ', true)
     args = Shellwords.shellwords(line)
+    next if args.empty?
     FacebookCommands.send(args.shift, *args)
   end
 else
