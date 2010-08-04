@@ -19,6 +19,16 @@ module FacebookCommands
 
       Stream.send(args.shift, *args)
     end
+    
+    def status(*args)
+      # So we can do 'facebook status "Foo bar baz buz."'
+      if args.first == 'help'
+        puts 'This is an alias for `stream publish -m`'
+        return
+      else
+        Stream.send('publish', "-m " + args.first)
+      end
+    end
 
     private
 
