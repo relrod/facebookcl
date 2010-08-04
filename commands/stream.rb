@@ -64,6 +64,7 @@ module FacebookCommands
         end
 
         def read(*args)
+          # TODO: Make it so we can read from anyone's feed.
           stream = FacebookCL.get('me/feed')['data']
           if args.shift == 'filter'
             must_contain = args.first
@@ -74,16 +75,18 @@ module FacebookCommands
           # every time. It's never going to change. I'd rather check it
           # one time, then loop through, than check every time, which is
           # inefficient.
+          # We show the id so someone can copypaste it to use the 'like' command
+          # that I'm about to code.
           if must_contain
             stream.each { |post|
               if post['message'].include? must_contain
-                puts post['message']
+                puts "[#{post['id']}] #{post['message']}"
                 puts "\n------------------------------------------------------------\n"
               end
             }
           else
             stream.each { |post|
-              puts post['message']
+              puts "[#{post['id']}] #{post['message']}"
               puts "\n------------------------------------------------------------\n"
             }
           end
