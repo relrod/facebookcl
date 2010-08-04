@@ -1,4 +1,3 @@
-require 'pp'
 module FacebookCommands
   class << self
     def friends(*args)
