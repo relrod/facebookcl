@@ -14,6 +14,7 @@ begin
     gem.authors = ["Justin Bishop"]
     gem.executables = ['facebook']
     gem.add_dependency 'json'
+    gem.add_dependency 'launchy' # cross-platform, open web browser.
     gem.post_install_message = <<MESSAGE
 
 ===========================================================

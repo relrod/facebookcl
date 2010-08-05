@@ -36,6 +36,7 @@ module FacebookCL
     attr_accessor :uid
 
     def authorize
+      require 'launchy' # Only require it if we're authorizing.
       if (File.exists?(config_filename))
         puts "Loading authentication data from #{config_filename}"
         data = JSON.parse(File.open(config_filename){|file| file.read})
@@ -58,14 +59,8 @@ module FacebookCL
         auth_url = "https://#{GRAPH_URL}/oauth/authorize?" +
           params.map{|key, value| "#{key}=#{value}"}.join('&')
 
-        if (RUBY_PLATFORM.downcase.include?("darwin"))
-          `open '#{auth_url}'`
-        else
-          puts 'Welcome New User! ' +
-            'You need to authorize FacebookCL. ' +
-            "Please visit this URL in your browser of choice: \n\n" +
-            auth_url
-        end
+        
+        Launchy.open(auth_url) # This should be cross-platform.
 
         server = FacebookAuthServer.new(NEXT_URL, SERVER_PORT)
         self.access_token =
