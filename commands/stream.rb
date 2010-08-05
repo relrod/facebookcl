@@ -26,6 +26,10 @@ module FacebookCommands
         puts 'This is an alias for `stream publish -m`'
         return
       else
+        if args.first.nil?
+          puts 'You status is required: `status <status update>`'
+          return
+        end
         Stream.send('publish', "-m " + args.first)
       end
     end
