@@ -27,7 +27,8 @@ module FacebookCommands
         return
       else
         if args.first.nil?
-          message = gets.chomp
+          puts "Reading input from STDIN."
+          message = STDIN.read.gsub("\n","   ")
         else
           message = args.first
         end
