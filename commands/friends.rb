@@ -6,7 +6,7 @@ module FacebookCommands
         puts 'list <uid> [returns list of <uid>\'s friends]'
         return
       end
-      
+     
       if args.first == 'list'
         args.shift
         person = !args.empty? ? args.first : 'me'
@@ -15,7 +15,7 @@ module FacebookCommands
           puts "[*] #{friend['name']}"
         end
       end
-      
+     
       if args.first == 'count'
         args.shift
         person = !args.empty? ? args.first : 'me'
@@ -23,5 +23,6 @@ module FacebookCommands
         puts "Count: #{friends['data'].size}"
       end
     end
+    alias :friend :friends
   end
 end
