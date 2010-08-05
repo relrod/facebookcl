@@ -27,10 +27,11 @@ module FacebookCommands
         return
       else
         if args.first.nil?
-          puts 'You status is required: `status <status update>`'
-          return
+          message = gets.chomp
+        else
+          message = args.first
         end
-        Stream.send('publish', "-m " + args.first)
+        Stream.send('publish', "-m " + message)
       end
     end
 
