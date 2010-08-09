@@ -6,6 +6,7 @@ require 'net/https'
 require 'open-uri'
 require 'socket'
 require 'uri'
+require 'launchy'
 
 # runtime dependencies
 require 'json'
@@ -36,7 +37,6 @@ module FacebookCL
     attr_accessor :uid
 
     def authorize
-      require 'launchy' # Only require it if we're authorizing.
       if (File.exists?(config_filename))
         puts "Loading authentication data from #{config_filename}"
         data = JSON.parse(File.open(config_filename){|file| file.read})
