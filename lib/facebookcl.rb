@@ -6,7 +6,6 @@ require 'net/https'
 require 'open-uri'
 require 'socket'
 require 'uri'
-require 'launchy'
 
 # runtime dependencies
 require 'json'
@@ -43,6 +42,7 @@ module FacebookCL
         self.access_token = data['access_token']
         self.uid = data['uid']
       else
+        require 'launchy'
         perms = ['publish_stream',
                  'create_event',
                  'offline_access',
